@@ -1,18 +1,17 @@
+import 'package:fitness/view/Task/task_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitness/common/colo_extension.dart'; // Adjust path as needed
 import 'package:fitness/view/home/home_view.dart'; // Adjust path as needed
-import 'package:fitness/view/main_tab/select_view.dart'; // Adjust path as needed
-import 'package:fitness/view/photo_progress/photo_progress_view.dart'; // Adjust path as needed
-import 'package:fitness/view/profile/profile_view.dart'; // Adjust path as needed
 import 'package:fitness/controller/add_task.dart';
 import 'package:fitness/common_widget/tab_button.dart';
 import 'package:slider_button/slider_button.dart';
 
 class MainTabView extends StatefulWidget {
-  const MainTabView({Key? key}) : super(key: key);
+  const MainTabView({Key? key,}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _MainTabViewState createState() => _MainTabViewState();
 }
 
@@ -98,14 +97,21 @@ class _MainTabViewState extends State<MainTabView> {
                                 ),
                               ),],
                           ),
-                          SizedBox(height: 16.0),
+                          const SizedBox(height: 16.0),
                           SliderButton(
                             action: () async {
                               await controller.submitData(
                                 _titleController.text,
                                 _subtitleController.text,
                               );
-                              Navigator.of(context).pop();
+
+                              _titleController.clear();
+                              _subtitleController.clear();
+                              setState(() {
+                    selectTab = 1;
+                    currentTab = const TaskPage();
+                    
+                  });
                               return false;
                             },
                             label: const Text(
@@ -166,7 +172,7 @@ class _MainTabViewState extends State<MainTabView> {
                 onTap: () {
                   setState(() {
                     selectTab = 1;
-                    currentTab = const SelectView();
+                    currentTab =  const TaskPage();
                   });
                 },
               ),
@@ -178,7 +184,7 @@ class _MainTabViewState extends State<MainTabView> {
                 onTap: () {
                   setState(() {
                     selectTab = 2;
-                    currentTab = const PhotoProgressView();
+                    currentTab = const TaskPage();
                   });
                 },
               ),
@@ -189,7 +195,7 @@ class _MainTabViewState extends State<MainTabView> {
                 onTap: () {
                   setState(() {
                     selectTab = 3;
-                    currentTab = const ProfileView();
+                    currentTab = const TaskPage();
                   });
                 },
               ),

@@ -98,6 +98,69 @@ class TaskController extends GetxController {
       );
     }
   }
+   Future<dynamic> deletetask(String id, refetch) async {
+    // Create RequestData object
+    // RequestData data = RequestData(title: title, subtitle: subtitle);
+
+    // Convert to JSON
+    // String jsonData = requestDataToJson(data);
+
+    // Example: Send data to server
+    Uri url = Uri.parse("http://10.0.2.2:5434/todo/$id");
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      var response = await httpClient.delete(url, headers: headers);
+      print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        refetch();
+        Get.snackbar(
+          "Task Deleted",
+          "Task completed successfully!",
+          backgroundColor: Colors.red,
+          colorText: TColor.white,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2),
+          icon: Icon(
+            Icons.check_circle,
+            color: TColor.white,
+          ),
+        );
+      } else if(response.statusCode == 500) {
+         print("Error: ${response.reasonPhrase}, ${response.body}");
+        Get.snackbar(
+         
+          "Error",
+          "Failed to add task. Please try again later.",
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2),
+          icon: Icon(
+            Icons.error_outline,
+            color: Colors.white,
+          ),
+        );
+      }
+    } catch (e) {
+      print("Error: $e");
+      Get.snackbar(
+        "Error",
+        "Failed to connect to server. Please check your internet connection.",
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 2),
+        icon: Icon(
+          Icons.error_outline,
+          color: Colors.white,
+        ),
+      );
+    }
+  }
 
   @override
   void dispose() {
