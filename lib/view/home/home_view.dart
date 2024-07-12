@@ -1,11 +1,14 @@
 // ignore_for_file: library_prefixes
 
+import 'package:animated_hint_textfield/animated_hint_textfield.dart';
 import 'package:fitness/common_widget/round_button.dart';
 import 'package:fitness/hook/fetch_contribution.dart';
+import 'package:fitness/view/Expense/add_expense.dart';
 import 'package:fitness/view/Task/todo_home.dart';
 import 'package:fitness/view/Water/water_intake.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import '../../common/colo_extension.dart';
 import 'notification_view.dart';
 import 'package:fitness/view/Github/git_widget.dart' as GitWidget;
@@ -18,7 +21,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
@@ -40,6 +42,7 @@ class _HomeViewState extends State<HomeView> {
                         Text(
                           "Welcome Back,",
                           style: TextStyle(color: TColor.gray, fontSize: 12),
+                          selectionColor: Colors.blue,
                         ),
                         Text(
                           "Aditya Singh",
@@ -160,6 +163,20 @@ class _HomeViewState extends State<HomeView> {
                   height: media.width * 0.05,
                 ),
                 const WaterIntake(),
+                SizedBox(
+                  height: media.width * 0.1,
+                ),
+                Text(
+                  "Update Your Expenses",
+                  style: TextStyle(
+                      color: TColor.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700),
+                ),
+                SizedBox(
+                  height: media.width * 0.02,
+                ),
+                const AddExpense(),
                 SizedBox(
                   height: media.width * 0.1,
                 ),

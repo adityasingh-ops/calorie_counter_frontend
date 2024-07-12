@@ -1,7 +1,9 @@
 import 'package:fitness/common/colo_extension.dart';
 import 'package:fitness/controller/add_task.dart';
 import 'package:fitness/controller/task_controller.dart';
+import 'package:fitness/hook/fetch_expense.dart';
 import 'package:fitness/hook/water.dart';
+import 'package:fitness/model/expense_model.dart';
 import 'package:fitness/model/water_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -17,10 +19,19 @@ class WaterIntake extends HookWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(AddTask());
     final hookResult = useFetchwaterdata();
+    final hookResult2 = useFetchAllExpense();
+    final List<Expense>? expense = hookResult2.data;
     final List<Transaction>? water = hookResult.data;
     final isLoading = hookResult.isLoading;
     final refetch = hookResult.refetch;
     var media = MediaQuery.of(context).size;
+    var totalmoneyspent = expense != null
+        ? expense.fold(0, (previousValue, element) => previousValue + element.amount)
+        : 0;
+    var totalmoney = 4000;
+    var moneyremainig = totalmoney - totalmoneyspent;
+    var totalmoneyspentpercentage = totalmoneyspent / totalmoney * 100;
+    print("total money left percentage ${totalmoneyspent/totalmoney*100}");
     return Row(
       children: [
         //const WaterIntake(),
@@ -399,7 +410,7 @@ class WaterIntake extends HookWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Calories",
+                      "Expenses",
                       style: TextStyle(
                           color: TColor.black,
                           fontSize: 12,
@@ -416,7 +427,7 @@ class WaterIntake extends HookWidget {
                                 0, 0, bounds.width, bounds.height));
                       },
                       child: Text(
-                        "760 kCal",
+                        "Total: ${totalmoneyspent}Rs",
                         style: TextStyle(
                             color: TColor.white.withOpacity(0.7),
                             fontWeight: FontWeight.w700,
@@ -444,21 +455,26 @@ class WaterIntake extends HookWidget {
                               ),
                               child: FittedBox(
                                 child: Text(
-                                  "230kCal\nleft",
+                                  "${moneyremainig}Rs\nleft",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: TColor.white, fontSize: 11),
                                 ),
                               ),
                             ),
-                            SimpleCircularProgressBar(
-                              progressStrokeWidth: 10,
-                              backStrokeWidth: 10,
-                              progressColors: TColor.primaryG,
-                              backColor: Colors.grey.shade100,
-                              valueNotifier: ValueNotifier(50),
-                              startAngle: -180,
-                            ),
+                            
+                               SimpleCircularProgressBar(
+                                progressStrokeWidth: 13,
+                                backStrokeWidth: 13,
+                                progressColors: TColor.primaryG,
+                                backColor: Colors.grey.shade100,
+                                valueNotifier: ValueNotifier(
+                                    totalmoneyspentpercentage.isFinite
+                                        ? totalmoneyspentpercentage
+                                        : 0),
+                                startAngle: 0,
+                              ),
+                            
                           ],
                         ),
                       ),
@@ -471,3 +487,4 @@ class WaterIntake extends HookWidget {
     );
   }
 }
+

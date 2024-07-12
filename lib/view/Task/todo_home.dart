@@ -53,7 +53,7 @@ class TODO extends HookWidget {
               foregrondColor: Colors.purple,
               ratio: controller.completedRatio,
               direction: Axis.vertical,
-              curve: Curves.fastLinearToSlowEaseIn,
+              curve: Curves.fastLinearToSlowEaseIn, 
               duration: const Duration(seconds: 3),
               borderRadius: BorderRadius.circular(15),
               gradientColor: LinearGradient(

@@ -28,6 +28,7 @@ class _MainTabViewState extends State<MainTabView> {
       backgroundColor: TColor.white,
       body: PageStorage(bucket: PageStorageBucket(), child: currentTab),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       floatingActionButton: SizedBox(
         width: 70,
         height: 70,
@@ -38,7 +39,10 @@ class _MainTabViewState extends State<MainTabView> {
             height: 65,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: TColor.primaryG,
+                colors: [
+                  TColor.primaryColor1,
+                  TColor.primaryColor2,
+                ],
               ),
               borderRadius: BorderRadius.circular(35),
               boxShadow: const [

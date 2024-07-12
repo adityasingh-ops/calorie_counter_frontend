@@ -10,6 +10,8 @@ import 'package:http/http.dart' as http;
 
 class AddTask extends GetxController {
   final http.Client httpClient = http.Client();
+
+  get refetch => null;
   // final hookresult = useFetchAllalltask();
 
 
